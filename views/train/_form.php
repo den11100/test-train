@@ -20,13 +20,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'time_finish')->textInput() ?>
 
-    <?= $form->field($model, 'travel_time')->textInput() ?>
-
     <?= $form->field($model, 'price')->textInput() ?>
 
     <?= $form->field($model, 'company')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'schedule')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'schedule')->checkboxList($model->getDayLabels()); ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

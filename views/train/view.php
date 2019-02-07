@@ -34,10 +34,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'time_start',
             'station_finish',
             'time_finish',
-            'travel_time:datetime',
+            [
+                'attribute' => 'travel_time',
+                'value' => $model->timeInHoursAndMinutes(),
+            ],
             'price',
             'company',
-            'schedule',
+            [
+                'attribute' => 'schedule',
+                'value' => $model->dayLabel(),
+            ],
         ],
     ]) ?>
 

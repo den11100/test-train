@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Train;
 use yii\data\ActiveDataProvider;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,7 +67,14 @@ class TrainController extends Controller
     {
         $model = new Train();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            $model->preparedSchedule();
+
+            $model->getTravelTime();
+
+            $model->save(false);
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -86,7 +94,16 @@ class TrainController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model->preparedSchedule();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            $model->preparedSchedule();
+
+            $model->getTravelTime();
+
+            $model->save(false);
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

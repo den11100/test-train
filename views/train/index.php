@@ -21,17 +21,26 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'station_start',
             'time_start',
             'station_finish',
             'time_finish',
-            //'travel_time:datetime',
-            //'price',
-            //'company',
-            //'schedule',
+            [
+                'attribute' => 'travel_time',
+                'value' => function($data) {
+                    return  $data->timeInHoursAndMinutes();
+                }
+            ],
+            'price',
+            'company',
+            [
+                'attribute' => 'schedule',
+                'value' => function($data) {
+                    return $data->dayLabel();
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
