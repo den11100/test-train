@@ -60,6 +60,7 @@ $config = [
                 'api/trains/update/<id:\d+>' => 'api/train/update',
                 'api/trains/' => 'api/train/index',
                 '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
+                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
 
