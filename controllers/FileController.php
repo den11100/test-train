@@ -36,34 +36,80 @@ class FileController extends Controller
         ]);
     }
 
+
+    //<html>
+    //    <body>
+    //        <p>Курсы валют</p>
+    //        <table>
+    //            <tr><td>Валюта</td><td>Курс</td></tr>
+    //            <tr><td>EUR</td><td>40</td></tr>
+    //            <tr><td>USD</td><td>30</td></tr>
+    //            <tr><td>UAN</td><td>20</td></tr>
+    //        </table>
+    //    </body>
+    //</html>
+    //Решение:
+    //
+    //
+    //include $_SERVER['DOCUMENT_ROOT'].'phpQuery.php';
+    //$pageText = file_get_contents($path);
+    ////Создаем корневой объект phpQuery
+    ////$document = phpQuery::newDocumentHTML($pageText,'UTF8');//С указание кодировки
+    //$document = phpQuery::newDocumentHTML($pageText); //Без указания кодировки
+    //$arTr = pq($document)->find('tr:gt(0)');//Получаем все строки, начиная со второй
+    //$res = array();
+    //foreach ($arTr as $tr){//цикл по строкам
+    //    $currency = pq($tr)->find('td:eq(0)')->html();//берем название валюты
+    //                                                  //из первой ячейки
+    //    $res[$currency] = pq($tr)->find('td:eq(1)')->html(); //курс из второй
+    //}
+
     public function actionView($id, $name)
     {
         $file = FileHelper::findFiles(Yii::getAlias('@app').'/uploads',['only'=>[$name]]);
 
         if ($file) {
             $filePath = array_shift($file);
-            $doc = phpQuery::newDocumentHTML(file_get_contents($filePath), $charset = 'utf-8');
+            $doc = phpQuery::newDocumentHTML(file_get_contents($filePath));
 
+            $arTr = pq($doc)->find('tr:gt(2)');
+
+            $dateTimeList = [];
             $amountList = [];
-            foreach ($doc->find('table tr') as $tr) {
-                $tr = pq($tr);
+            foreach ($arTr as $key => $tr) {
+                $trPq = pq($tr);
 
-                //$tr->find('td:first-child')->attr('colspan')->remove();
+                if (($trPq->find('td:eq(2)')->text()) == 'balance') {
+                    $balance = $trPq->find('td:last')->text();
+                    $balance = str_replace(' ', '', $balance);
+                    $balance = round($balance,2);
 
-                $amount = $tr->find('td:last-child')->text();
-                if ($amount == "cancelled") continue;
-                if (stristr($amount, "expiration")) continue;
+                    $amountList[] = end($amountList) + $balance;
+                    $dateTimeList[] = $trPq->find('td:eq(1)')->text();
+                }
 
-                //if (is_numeric($amount)) {
-                    $amountList[] = (float) str_replace(' ', '', $amount);
-                //}
+                if (($trPq->find('td:eq(2)')->text()) == 'buy') {
+                    $amount = $trPq->find('td:last')->text();
+                    $amount = str_replace(' ', '', $amount);
+                    $amount = round($amount,2);
+
+                    $amountList[] = end($amountList) + $amount;
+                    $dateTimeList[] = $trPq->find('td:eq(1)')->text();
+                }
             }
-            self::printArr(array_sum($amountList));
-            self::printArr($amountList);
+
+            $seriesData = [];
+            foreach ($dateTimeList as $key => $date) {
+                foreach ($amountList as $amount) {
+                    $result[$key] = [$date, $amount];
+                }
+            }
+
+            //VarDumper::dump($result,7,1);
         }
 
         return $this->render('view', [
-
+            'seriesData' => $seriesData
         ]);
     }
 
