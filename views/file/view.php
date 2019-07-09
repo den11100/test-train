@@ -4,9 +4,11 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use miloschuman\highcharts\Highcharts;
 use miloschuman\highcharts\SeriesDataHelper;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var array $seriesData */
+
 
 
 ?>
@@ -15,30 +17,40 @@ use miloschuman\highcharts\SeriesDataHelper;
 
     <?= Highcharts::widget([
         'options' => [
-            'title' => ['text' => 'ppp'],
+            'title' => ['text' => 'Balance'],
             'xAxis' => [
+                'tickInterval' => 2 * 24 * 3600 * 1000,
                 'type' => 'datetime',
-//                'dateTimeLabelFormats' => [
-//                    'month'=> '%e. %b',
-//                    'year'=> '%b'
-//                ],
+                'labels'=> [
+                  'format'=> '{value:%d-%m}'
+                ],
                 'title' => ['text'=> 'Date'],
             ],
             'yAxis' => [
-                'title' => ['text' => 'price'],
-                'min' => 0
+                'title' => ['text' => 'Balance, $'],
             ],
-            'series' => [
-                [
-                        [1147651200, 0],
-                        [1147737600, 0.25],
-                        [1147824000, 1.41],
-                        [1147910400, 1.64],
-                ],
-            ]
+            'tooltip'=> [
+                'headerFormat'=> '{series.name}',
+                'pointFormat'=> '{point.x: %d-%m-%Y<br>%H:%M:%S} - {point.y: .2f} $',
+                'crosshairs' => true,
+            ],
+            'plotOptions'=> [
+                'spline'=> [
+                    'marker'=> [
+                        'enabled'=> true
+                    ]
+                ]
+            ],
+            'series' => [[
+                'name'=> 'Balance',
+                'data' => $seriesData,
+                'marker'=> [
+                    'enabled'=> true
+                ]
+            ]]
         ]
     ]);
-    ?>
+?>
 
 </div>
 
