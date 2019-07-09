@@ -12,7 +12,8 @@ class ParserHelper extends Model
     public static function getUnixTimestamp($datetime)
     {
         $datetime = str_replace('.', '/', $datetime);
-        $datetime = Yii::$app->formatter->asDatetime($datetime,'MM/dd/yyyy HH:mm:ss CEST');
+        Yii::$app->setTimeZone('UTC');
+        $datetime = Yii::$app->formatter->asDatetime($datetime,'php:m/d/Y H:i:s');
         return strtotime($datetime) * 1000;
     }
 }
