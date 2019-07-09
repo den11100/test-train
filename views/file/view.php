@@ -3,26 +3,33 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use miloschuman\highcharts\Highcharts;
-use miloschuman\highcharts\SeriesDataHelper;
-use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var array $seriesData */
 
-
-
 ?>
 <div class="file-view">
 
-
     <?= Highcharts::widget([
+        'scripts' => [
+            'modules/exporting',
+        ],
         'options' => [
+            'chart'=> [
+                'type'=> 'spline',
+                'zoomType' => 'x',
+                'width' => 1460,
+            ],
             'title' => ['text' => 'Balance'],
             'xAxis' => [
-                'tickInterval' => 2 * 24 * 3600 * 1000,
+                //'tickInterval' => 1 * 3600 * 1000,
                 'type' => 'datetime',
-                'labels'=> [
-                  'format'=> '{value:%d-%m}'
+                'dateTimeLabelFormats'=> [
+                    'minute'=> '%H:%M<br>%d-%m-%y',
+                    'hour'=> '%H:%M<br>%d-%m-%y',
+                    'day'=> '%d-%m-%y',
+                    'week'=> '%d-%m-%y',
+                    'month'=> '%d-%m-%y',
                 ],
                 'title' => ['text'=> 'Date'],
             ],
@@ -34,20 +41,23 @@ use yii\web\JsExpression;
                 'pointFormat'=> '{point.x: %d-%m-%Y<br>%H:%M:%S} - {point.y: .2f} $',
                 'crosshairs' => true,
             ],
-            'plotOptions'=> [
-                'spline'=> [
-                    'marker'=> [
-                        'enabled'=> true
-                    ]
-                ]
-            ],
             'series' => [[
                 'name'=> 'Balance',
                 'data' => $seriesData,
-                'marker'=> [
-                    'enabled'=> true
+            ]],
+            'plotOptions'=> [
+                'spline'=> [
+                    'lineWidth'=> 1,
+                    'states'=> [
+                        'hover'=> [
+                            'lineWidth'=> 2
+                        ]
+                    ],
+                    'marker'=> [
+                        'enabled'=> true
+                    ],
                 ]
-            ]]
+            ],
         ]
     ]);
 ?>

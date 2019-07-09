@@ -59,7 +59,7 @@ class FileController extends Controller
                     $dateTimeList[] = ParserHelper::getUnixTimestamp($trPq->find('td:eq(1)')->text());
                 }
 
-                if (($trPq->find('td:eq(2)')->text()) == 'buy') {
+                if (($trPq->find('td:eq(2)')->text() == 'buy') || ($trPq->find('td:eq(2)')->text() == 'sell')) {
                     $amount = $trPq->find('td:last')->text();
                     $amount = str_replace(' ', '', $amount);
                     $amount = round($amount,2);
