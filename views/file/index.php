@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\File */
 /* @var $files app\models\File[] */
 
-$this->title = 'My Yii Application';
+$this->title = 'Files';
 ?>
 <div class="file-index">
 
@@ -31,7 +31,7 @@ $this->title = 'My Yii Application';
         <div class="col-md-6">
 
             <?php if (!$files): ?>
-                <p>Нет загруженых файлов</p>
+                <p>Нет загруженных файлов</p>
             <?php endif; ?>
 
             <?php foreach ($files as $file): ?>
@@ -41,7 +41,7 @@ $this->title = 'My Yii Application';
                         <a href="<?= Url::to(['file/view', 'id' => $file->id]) ?>">  <span class="glyphicon glyphicon-eye-open"></span></a>
                         <span class="label label-success">Данные корректны</span>
                     <?php else: ?>
-                        <span class="label label-danger">Данные не корректны</span>
+                        <span class="label label-danger">Данные некорректны</span>
                     <?php endif; ?>
                     <a href="<?= Url::to(['file/delete', 'id' => $file->id]) ?>">  <span class="glyphicon glyphicon-remove"></span></a>
 

@@ -6,11 +6,7 @@ namespace app\controllers;
 
 use app\models\File;
 use app\models\ParserHelper;
-use app\models\Train;
-use phpQuery;
 use Yii;
-use yii\helpers\FileHelper;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;

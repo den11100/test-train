@@ -51,8 +51,8 @@ class File extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'status' => 'Status',
+            'name' => 'Название',
+            'status' => 'Статус',
             'uploadFile' => 'Загрузить файл',
         ];
     }
@@ -68,19 +68,5 @@ class File extends \yii\db\ActiveRecord
         } else {
             return false;
         }
-    }
-
-    /**
-     * @param string $file
-     * @return string
-     */
-    public static function getFileName($files)
-    {
-        $result = [];
-        foreach ($files as $file) {
-            $array = explode('/', $file);
-            $result[] = array_pop( $array);
-        }
-        return $result;
     }
 }

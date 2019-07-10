@@ -6,7 +6,7 @@ use miloschuman\highcharts\Highcharts;
 
 /* @var $this yii\web\View */
 /* @var array $seriesData */
-
+$this->title = 'Chart';
 ?>
 <div class="file-view">
 
