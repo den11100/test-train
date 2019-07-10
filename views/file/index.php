@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\File */
-/* @var array $files */
+/* @var $files app\models\File[] */
 
 $this->title = 'My Yii Application';
 ?>
@@ -22,18 +22,32 @@ $this->title = 'My Yii Application';
             <?= $form->field($model, 'uploadFile')->fileInput() ?>
 
             <div class="form-group">
-                <?= Html::submitButton('upload', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Загрузить', ['class' => 'btn btn-success']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
         </div>
 
         <div class="col-md-6">
-            <?php $i = 0 ?>
+
+            <?php if (!$files): ?>
+                <p>Нет загруженых файлов</p>
+            <?php endif; ?>
+
             <?php foreach ($files as $file): ?>
-                <p><?= ++$i .") ". $file ?> <a href="<?= Url::to(['file/view', 'id' => $i, 'name' => $file]) ?>"><span class="glyphicon glyphicon-eye-open"></span></a></p>
+                <div>
+                    id:<?= $file->id ?>  <?= $file->name ?>
+                    <?php if ($file->status): ?>
+                        <a href="<?= Url::to(['file/view', 'id' => $file->id]) ?>">  <span class="glyphicon glyphicon-eye-open"></span></a>
+                        <span class="label label-success">Данные корректны</span>
+                    <?php else: ?>
+                        <span class="label label-danger">Данные не корректны</span>
+                    <?php endif; ?>
+                    <a href="<?= Url::to(['file/delete', 'id' => $file->id]) ?>">  <span class="glyphicon glyphicon-remove"></span></a>
+
+                </div>
                 <hr>
-                <?php endforeach; ?>
+            <?php endforeach; ?>
 
         </div>
     </div>
