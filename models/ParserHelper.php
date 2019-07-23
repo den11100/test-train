@@ -46,7 +46,7 @@ class ParserHelper extends Model
                     $amount = round($amount,2);
 
                     $amountList[] = end($amountList) + $amount;
-                    $dateTimeList[] = ParserHelper::getUnixTimestamp($trPq->find('td:eq(1)')->text());
+                    $dateTimeList[] = self::getUnixTimestamp($trPq->find('td:eq(1)')->text());
                 }
             }
 
