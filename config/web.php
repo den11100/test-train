@@ -1,6 +1,12 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
+
+$params = array_merge(
+    require __DIR__ . '/params.php',
+    require __DIR__ . '/params_local.php'
+);
+
 $db = require __DIR__ . '/db.php';
 
 $config = [
