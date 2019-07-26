@@ -22,7 +22,8 @@
         "miloschuman/yii2-highcharts-widget": "^7.0",
         "facebook/graph-sdk": "^5.7",
         "facebook/php-ads-sdk": "^3.3",
-        "yiisoft/yii2-httpclient": "^2.0"
+        "yiisoft/yii2-httpclient": "^2.0",
+        "danielstieber/coda-php": "^0.0.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

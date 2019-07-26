@@ -15,3 +15,31 @@ params_local.php
     return [
         
     ];
+    
+    
+    
+Возможный вариант испорльзования fb
+
+    public function actionIndex()
+    {
+        $fb = new Facebook( [
+            'app_id'                => Yii::$app->params['fb-app-id'],
+            'app_secret'            => Yii::$app->params['fb-secret'],
+            'default_graph_version' => Yii::$app->params['fb-default_graph_version'],
+        ]);
+
+        try {
+            // Returns a `FacebookFacebookResponse` object
+            $response = $fb->get(
+                '/me/adaccounts/?fields=account_status,amount_spent,balance,currency,account_id',
+                Yii::$app->params['fb-user-token']
+            );
+        } catch(FacebookResponseException $e) {
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch(FacebookSDKException $e) {
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+        $result = $response->getGraphEdge()->asArray();   
+    }
