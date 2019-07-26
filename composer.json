@@ -21,7 +21,8 @@
         "electrolinux/phpquery": "^0.9.6",
         "miloschuman/yii2-highcharts-widget": "^7.0",
         "facebook/graph-sdk": "^5.7",
-        "facebook/php-ads-sdk": "^3.3"
+        "facebook/php-ads-sdk": "^3.3",
+        "yiisoft/yii2-httpclient": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
