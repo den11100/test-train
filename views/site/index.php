@@ -20,8 +20,8 @@ $this->title = 'TEST-TASKS';
                 <p><a class="btn btn-default" href="<?= Url::to("/file/index") ?>">Balance chart</a></p>
             </div>
             <div class="col-lg-4">
-                <h2>Calc fractal</h2>
-                <p><a class="btn btn-default" href="<?= Url::to("/fractal/index") ?>">Calc fractal</a></p>
+                <h2>Coda</h2>
+                <p><a class="btn btn-default" href="<?= Url::to("/coda/start") ?>">Coda</a></p>
             </div>
         </div>
 
