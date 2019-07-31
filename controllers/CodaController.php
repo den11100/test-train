@@ -3,6 +3,7 @@
 
 namespace app\controllers;
 
+use app\models\Coda;
 use Yii;
 use app\models\forms\CodaForm;
 use yii\helpers\ArrayHelper;
@@ -117,5 +118,67 @@ class CodaController extends Controller
     {
         $listFbAccountStatus = [1 => 'ACTIVE', 2=> 'DISABLED', 3 => 'UNSETTLED'];
         return ArrayHelper::getValue($listFbAccountStatus,$key);
+    }
+
+    public function actionSyncBase()
+    {
+        $coda = new CodaPHP(Yii::$app->params['coda-api-token']);
+        //$baseDocId = 'Xw3SUMXees'; //CRM
+        //$baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
+
+        $baseDocId = 'eI_z4TaMeP'; //Copy dn CRM
+        $baseTableId = 'grid-av2Ob-DeZY'; // dn ALL ACCOUNTS
+
+        $copyDocId = 'x-qvr7i6pe';
+        $copyTableId = 'grid-av2Ob-DeZY';
+        $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
+
+        $baseTableRows = Coda::getCodaRows($coda, $baseDocId, $baseTableId);
+        $copyTableRows = Coda::getCodaRows($coda, $copyDocId, $copyTableId);
+
+        $newRows = Coda::getNewRows($baseTableRows, $copyTableRows, $keyColumnName);
+        if ($newRows) $coda->insertRows($copyDocId, $copyTableId, $newRows, [$keyColumnName]);
+
+        $listRemoveRowName = Coda::getRemoveRows($baseTableRows, $copyTableRows, $keyColumnName);
+        if ($listRemoveRowName) {
+            foreach ($listRemoveRowName as $rowName) {
+                $coda->deleteRow($copyDocId, $copyTableId, $rowName);
+            }
+        }
+
+        $updateRows = Coda::getUpdateRows($baseTableRows, $copyTableRows, $keyColumnName);
+        if ($updateRows) {
+            foreach ($updateRows as $key => $row) {
+                $coda->updateRow($copyDocId, $copyTableId, $key, $row);
+            }
+        }
+
+        echo 'finish';
+    }
+
+    public function actionSyncCopy()
+    {
+        $coda = new CodaPHP(Yii::$app->params['coda-api-token']);
+        //$copyDocId = 'Xw3SUMXees'; //CRM
+        //$copyTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
+
+        $copyDocId = 'eI_z4TaMeP';
+        $copyTableId = 'grid-av2Ob-DeZY';
+
+        $baseDocId = 'x-qvr7i6pe';
+        $baseTableId = 'grid-av2Ob-DeZY';
+        $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
+
+        $baseTableRows = Coda::getCodaRows($coda, $baseDocId, $baseTableId);
+        $copyTableRows = Coda::getCodaRows($coda, $copyDocId, $copyTableId);
+
+        $updateRows = Coda::getUpdateRows($baseTableRows, $copyTableRows, $keyColumnName);
+        if ($updateRows) {
+            foreach ($updateRows as $key => $row) {
+                $coda->updateRow($copyDocId, $copyTableId, $key, $row);
+            }
+        }
+
+        echo 'finish';
     }
 }
