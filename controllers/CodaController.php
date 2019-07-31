@@ -25,8 +25,7 @@ class CodaController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'sync-base' => ['get'],
-                    'sync-copy' => ['get'],
+                    'sync-status' => ['get'],
                 ],
             ],
         ];
@@ -137,7 +136,7 @@ class CodaController extends Controller
         return ArrayHelper::getValue($listFbAccountStatus,$key);
     }
 
-    public function actionSyncBase($key)
+    public function actionSyncStatus($key, $row_name, $status)
     {
         $this->checkCkey($key);
 
@@ -145,61 +144,13 @@ class CodaController extends Controller
         $baseDocId = 'Xw3SUMXees'; //CRM
         $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
 
-        //$baseDocId = 'eI_z4TaMeP'; //Copy dn CRM
-        //$baseTableId = 'grid-av2Ob-DeZY'; // dn ALL ACCOUNTS
+        $status = str_replace('_', ' ', $status);
 
-        $copyDocId = 'x-qvr7i6pe';
-        $copyTableId = 'grid-av2Ob-DeZY';
-        $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
+        $row = ['Статус аккаунта' => $status];
+        $coda->updateRow($baseDocId, $baseTableId, $row_name, $row);
 
-        $baseTableRows = Coda::getCodaRows($coda, $baseDocId, $baseTableId);
-        $copyTableRows = Coda::getCodaRows($coda, $copyDocId, $copyTableId);
-
-        $newRows = Coda::getNewRows($baseTableRows, $copyTableRows, $keyColumnName);
-        if ($newRows) $coda->insertRows($copyDocId, $copyTableId, $newRows, [$keyColumnName]);
-
-        $listRemoveRowName = Coda::getRemoveRows($baseTableRows, $copyTableRows, $keyColumnName);
-        if ($listRemoveRowName) {
-            foreach ($listRemoveRowName as $rowName) {
-                $coda->deleteRow($copyDocId, $copyTableId, $rowName);
-            }
-        }
-
-        $updateRows = Coda::getUpdateRows($baseTableRows, $copyTableRows, $keyColumnName);
-        if ($updateRows) {
-            foreach ($updateRows as $key => $row) {
-                $coda->updateRow($copyDocId, $copyTableId, $key, $row);
-            }
-        }
-
-        echo 'finish';
-    }
-
-    public function actionSyncCopy($key)
-    {
-        $this->checkCkey($key);
-
-        $coda = new CodaPHP(Yii::$app->params['coda-api-token']);
-        $copyDocId = 'Xw3SUMXees'; //CRM
-        $copyTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
-
-        //$copyDocId = 'eI_z4TaMeP';
-        //$copyTableId = 'grid-av2Ob-DeZY';
-
-        $baseDocId = 'x-qvr7i6pe';
-        $baseTableId = 'grid-av2Ob-DeZY';
-        $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
-
-        $baseTableRows = Coda::getCodaRows($coda, $baseDocId, $baseTableId);
-        $copyTableRows = Coda::getCodaRows($coda, $copyDocId, $copyTableId);
-
-        $updateRows = Coda::getUpdateRows($baseTableRows, $copyTableRows, $keyColumnName);
-        if ($updateRows) {
-            foreach ($updateRows as $key => $row) {
-                $coda->updateRow($copyDocId, $copyTableId, $key, $row);
-            }
-        }
-
+        var_dump($row_name);
+        var_dump($status);
         echo 'finish';
     }
 

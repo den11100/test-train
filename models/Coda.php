@@ -77,7 +77,6 @@ class Coda extends Model
     public static function getUpdateRows(array $baseTableRows, array $copyTableRows, $keyColumnName)
     {
         $preparedBase = ArrayHelper::index($baseTableRows, $keyColumnName);
-        //VarDumper::dump($preparedBase,7,1);die;
         $preparedCopy = ArrayHelper::index($copyTableRows, $keyColumnName);
 
         $diff = array_diff(array_map('json_encode', $preparedBase), array_map('json_encode', $preparedCopy));

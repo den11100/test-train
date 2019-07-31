@@ -16,6 +16,11 @@ params_local.php
         
     ];
     
+ 
+ Cron синхронизация основной таблицы с копией (основная главная)  
+ */1 * * * * php /home/u4210/domains/train.sitespro.ru/yii coda/sync-base
+  
+   
     
     
 Возможный вариант испорльзования fb

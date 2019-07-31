@@ -23,9 +23,6 @@ class CodaController extends Controller
         $baseDocId = 'Xw3SUMXees'; //CRM
         $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
 
-        //$baseDocId = 'eI_z4TaMeP'; //Copy dn CRM
-        //$baseTableId = 'grid-av2Ob-DeZY'; // dn ALL ACCOUNTS
-
         $copyDocId = 'x-qvr7i6pe';
         $copyTableId = 'grid-av2Ob-DeZY';
         $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
