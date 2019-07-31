@@ -142,11 +142,11 @@ class CodaController extends Controller
         $this->checkCkey($key);
 
         $coda = new CodaPHP(Yii::$app->params['coda-api-token']);
-        //$baseDocId = 'Xw3SUMXees'; //CRM
-        //$baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
+        $baseDocId = 'Xw3SUMXees'; //CRM
+        $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
 
-        $baseDocId = 'eI_z4TaMeP'; //Copy dn CRM
-        $baseTableId = 'grid-av2Ob-DeZY'; // dn ALL ACCOUNTS
+        //$baseDocId = 'eI_z4TaMeP'; //Copy dn CRM
+        //$baseTableId = 'grid-av2Ob-DeZY'; // dn ALL ACCOUNTS
 
         $copyDocId = 'x-qvr7i6pe';
         $copyTableId = 'grid-av2Ob-DeZY';
@@ -180,11 +180,11 @@ class CodaController extends Controller
         $this->checkCkey($key);
 
         $coda = new CodaPHP(Yii::$app->params['coda-api-token']);
-        //$copyDocId = 'Xw3SUMXees'; //CRM
-        //$copyTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
+        $copyDocId = 'Xw3SUMXees'; //CRM
+        $copyTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
 
-        $copyDocId = 'eI_z4TaMeP';
-        $copyTableId = 'grid-av2Ob-DeZY';
+        //$copyDocId = 'eI_z4TaMeP';
+        //$copyTableId = 'grid-av2Ob-DeZY';
 
         $baseDocId = 'x-qvr7i6pe';
         $baseTableId = 'grid-av2Ob-DeZY';

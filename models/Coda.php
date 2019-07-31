@@ -6,6 +6,7 @@ use CodaPHP\CodaPHP;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 
 class Coda extends Model
 {
@@ -21,7 +22,14 @@ class Coda extends Model
 
         $rows = [];
         foreach ($listRows['items'] as $row) {
-            $rows[] = $row['values'];
+            $rows[] = [
+                'Номер аккаунта' => $row['values']['Номер аккаунта'],
+                'Статус аккаунта' => $row['values']['Статус аккаунта'],
+                'Логин' => $row['values']['Логин'],
+                'Пароль' => $row['values']['Пароль'],
+                'Тип аккаунта' => $row['values']['Тип аккаунта'],
+                'Номер' => $row['values']['Номер']
+            ];
         }
         return $rows;
     }
@@ -69,6 +77,7 @@ class Coda extends Model
     public static function getUpdateRows(array $baseTableRows, array $copyTableRows, $keyColumnName)
     {
         $preparedBase = ArrayHelper::index($baseTableRows, $keyColumnName);
+        //VarDumper::dump($preparedBase,7,1);die;
         $preparedCopy = ArrayHelper::index($copyTableRows, $keyColumnName);
 
         $diff = array_diff(array_map('json_encode', $preparedBase), array_map('json_encode', $preparedCopy));
