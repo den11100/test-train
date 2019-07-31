@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\models\Coda;
 use Yii;
 use app\models\forms\CodaForm;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
@@ -15,6 +16,22 @@ use CodaPHP\CodaPHP;
 
 class CodaController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'sync-base' => ['get'],
+                    'sync-copy' => ['get'],
+                ],
+            ],
+        ];
+    }
+
     public function actionStart()
     {
         $model = new CodaForm();
@@ -120,8 +137,10 @@ class CodaController extends Controller
         return ArrayHelper::getValue($listFbAccountStatus,$key);
     }
 
-    public function actionSyncBase()
+    public function actionSyncBase($key)
     {
+        $this->checkCkey($key);
+
         $coda = new CodaPHP(Yii::$app->params['coda-api-token']);
         //$baseDocId = 'Xw3SUMXees'; //CRM
         //$baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
@@ -156,8 +175,10 @@ class CodaController extends Controller
         echo 'finish';
     }
 
-    public function actionSyncCopy()
+    public function actionSyncCopy($key)
     {
+        $this->checkCkey($key);
+
         $coda = new CodaPHP(Yii::$app->params['coda-api-token']);
         //$copyDocId = 'Xw3SUMXees'; //CRM
         //$copyTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
@@ -180,5 +201,13 @@ class CodaController extends Controller
         }
 
         echo 'finish';
+    }
+
+    private function checkCkey($key)
+    {
+        if ($key == Yii::$app->params['security-key']) {
+            return true;
+        }
+        die('access-denied');
     }
 }

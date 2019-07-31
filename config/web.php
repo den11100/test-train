@@ -69,6 +69,8 @@ $config = [
                 'api/trains/create' => 'api/train/create',
                 'api/trains/update/<id:\d+>' => 'api/train/update',
                 'api/trains/' => 'api/train/index',
+                'coda/sync-base/<key:\w+>' => 'coda/sync-base',
+                'coda/sync-copy/<key:\w+>' => 'coda/sync-copy',
                 '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
                 '<controller>/<action>' => '<controller>/<action>',
             ],
