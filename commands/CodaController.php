@@ -20,11 +20,21 @@ class CodaController extends Controller
     public function actionSyncBase()
     {
         $coda = new CodaPHP("4335b59e-cb34-4106-a55d-f662a8136f2f");
-        $baseDocId = 'Xw3SUMXees'; //CRM
+
+//        Тестовые таблички
+//        $baseDocId = 'Xw3SUMXees'; //CRM
+//        $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
+//
+//        $copyDocId = 'x-qvr7i6pe';
+//        $copyTableId = 'grid-av2Ob-DeZY';
+
+        $baseDocId = 'IuphEtBZK-'; //CRM
         $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
 
-        $copyDocId = 'x-qvr7i6pe';
-        $copyTableId = 'grid-av2Ob-DeZY';
+        $copyDocId = 'urMwfrPg41';
+        $copyTableId = 'grid-SNr6xSvODJ';
+
+
         $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
 
         $baseTableRows = Coda::getCodaRows($coda, $baseDocId, $baseTableId);

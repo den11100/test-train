@@ -141,7 +141,12 @@ class CodaController extends Controller
         $this->checkCkey($key);
 
         $coda = new CodaPHP(Yii::$app->params['coda-api-token']);
-        $baseDocId = 'Xw3SUMXees'; //CRM
+        // Тестовые таблички
+//        $baseDocId = 'Xw3SUMXees'; //CRM
+//        $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
+
+
+        $baseDocId = 'IuphEtBZK-'; //CRM
         $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
 
         $status = str_replace('_', ' ', $status);
@@ -160,5 +165,53 @@ class CodaController extends Controller
             return true;
         }
         die('access-denied');
+    }
+
+    public function actionTest()
+    {
+        $coda = new CodaPHP("4335b59e-cb34-4106-a55d-f662a8136f2f");
+
+//        Тестовые таблички
+//        $baseDocId = 'Xw3SUMXees'; //CRM
+//        $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
+//
+//        $copyDocId = 'x-qvr7i6pe';
+//        $copyTableId = 'grid-av2Ob-DeZY';
+
+        $baseDocId = 'IuphEtBZK-'; //CRM
+        $baseTableId = 'grid-av2Ob-DeZY'; // ALL ACCOUNTS
+
+        $copyDocId = 'urMwfrPg41';
+        $copyTableId = 'grid-SNr6xSvODJ';
+
+
+        $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
+
+//        $columns = $coda->listColumns($baseDocId, $baseTableId);
+//        $columns = ArrayHelper::getColumn($columns['items'], 'name');
+//        $listColumns = array_combine($columns, $columns);
+//        VarDumper::dump($listColumns,7,1);die;
+
+        $baseTableRows = Coda::getCodaRows($coda, $baseDocId, $baseTableId);
+        $copyTableRows = Coda::getCodaRows($coda, $copyDocId, $copyTableId);
+
+        $newRows = Coda::getNewRows($baseTableRows, $copyTableRows, $keyColumnName);
+        if ($newRows) $coda->insertRows($copyDocId, $copyTableId, $newRows, [$keyColumnName]);
+
+        $listRemoveRowName = Coda::getRemoveRows($baseTableRows, $copyTableRows, $keyColumnName);
+        if ($listRemoveRowName) {
+            foreach ($listRemoveRowName as $rowName) {
+                $coda->deleteRow($copyDocId, $copyTableId, $rowName);
+            }
+        }
+
+        $updateRows = Coda::getUpdateRows($baseTableRows, $copyTableRows, $keyColumnName);
+        if ($updateRows) {
+            foreach ($updateRows as $key => $row) {
+                $coda->updateRow($copyDocId, $copyTableId, $key, $row);
+            }
+        }
+
+        return ExitCode::OK;
     }
 }

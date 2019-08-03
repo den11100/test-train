@@ -1,4 +1,4 @@
-Создать в папке config 2 файла
+##Создать в папке config 2 файла##
 
 db.local.php
 
@@ -17,13 +17,22 @@ params_local.php
     ];
     
  
- Cron синхронизация основной таблицы с копией (основная главная)  
- */1 * * * * php /home/u4210/domains/train.sitespro.ru/yii coda/sync-base
+ ##Cron синхронизация основной таблицы с копией (основная главная)##
+    */1 * * * * php /home/u4210/domains/train.sitespro.ru/yii coda/sync-base
   
+
+
+##На кнопках##    
+    RunActions(ModifyRows(thisRow, CopyTable.[Статус аккаунта], "В работе"), OpenWindow(Concatenate("https://train.sitespro.ru/coda/sync-status?key=xcpldksdcnviodpfgdgwdfqNmxdf","&row_name=",thisRow.[Номер аккаунта],"&status=В_работе")))    
+    
+    RunActions(ModifyRows(thisRow, CopyTable.[Статус аккаунта], "На верификации"), OpenWindow(Concatenate("https://train.sitespro.ru/coda/sync-status?key=xcpldksdcnviodpfgdgwdfqNmxdf","&row_name=",thisRow.[Номер аккаунта],"&status=На_верификации")))
+    
+    
+    RunActions(ModifyRows(thisRow, CopyTable.[Статус аккаунта], "Бан"), OpenWindow(Concatenate("https://train.sitespro.ru/coda/sync-status?key=xcpldksdcnviodpfgdgwdfqNmxdf","&row_name=",thisRow.[Номер аккаунта],"&status=Бан")))
    
     
     
-Возможный вариант испорльзования fb
+##Возможный вариант испорльзования fb##
 
     public function actionIndex()
     {
