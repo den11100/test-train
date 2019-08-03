@@ -187,7 +187,7 @@ class CodaController extends Controller
 
         $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
 
-//        $columns = $coda->listColumns($baseDocId, $baseTableId);
+//        $columns = $coda->listColumns($copyDocId, $copyTableId);
 //        $columns = ArrayHelper::getColumn($columns['items'], 'name');
 //        $listColumns = array_combine($columns, $columns);
 //        VarDumper::dump($listColumns,7,1);die;
