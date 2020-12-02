@@ -20,6 +20,7 @@ $config = [
             'class' => 'app\modules\api\ApiModule',
         ],
     ],
+    'language' => 'ru',
     'components' => [
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
