@@ -187,12 +187,12 @@ class CodaController extends Controller
 
         $keyColumnName = 'Номер аккаунта'; // Название столбца ключа в таблице Coda
 
-//        $columns = $coda->listColumns($copyDocId, $copyTableId);
-//        $columns = ArrayHelper::getColumn($columns['items'], 'name');
-//        $listColumns = array_combine($columns, $columns);
-//        VarDumper::dump($listColumns,7,1);die;
+        $columns = $coda->listColumns($copyDocId, $copyTableId);
+        $columns = ArrayHelper::getColumn($columns['items'], 'name');
+        $listColumns = array_combine($columns, $columns);
+        VarDumper::dump($listColumns,7,1);die;
 
-        $baseTableRows = Coda::getCodaRows($coda, $baseDocId, $baseTableId);
+        //$baseTableRows = Coda::getCodaRows($coda, $baseDocId, $baseTableId);
         $copyTableRows = Coda::getCodaRows($coda, $copyDocId, $copyTableId);
 
         $newRows = Coda::getNewRows($baseTableRows, $copyTableRows, $keyColumnName);
@@ -205,12 +205,12 @@ class CodaController extends Controller
             }
         }
 
-        $updateRows = Coda::getUpdateRows($baseTableRows, $copyTableRows, $keyColumnName);
-        if ($updateRows) {
-            foreach ($updateRows as $key => $row) {
-                $coda->updateRow($copyDocId, $copyTableId, $key, $row);
-            }
-        }
+//        $updateRows = Coda::getUpdateRows($baseTableRows, $copyTableRows, $keyColumnName);
+//        if ($updateRows) {
+//            foreach ($updateRows as $key => $row) {
+//                $coda->updateRow($copyDocId, $copyTableId, $key, $row);
+//            }
+//        }
 
         return ExitCode::OK;
     }

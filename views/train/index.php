@@ -8,6 +8,9 @@ use yii\widgets\Pjax;
 
 $this->title = 'Trains';
 $this->params['breadcrumbs'][] = $this->title;
+
+
+
 ?>
 <div class="train-index">
 
