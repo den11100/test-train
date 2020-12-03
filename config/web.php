@@ -16,8 +16,8 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules' => [
-        'api' => [
-            'class' => 'app\modules\api\ApiModule',
+        'v1' => [
+            'class' => 'app\modules\v1\ApiModule',
         ],
     ],
     'language' => 'ru',
@@ -66,13 +66,14 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'api/trains/<id:\d+>' => 'api/train/view',
-                'api/trains/create' => 'api/train/create',
-                'api/trains/update/<id:\d+>' => 'api/train/update',
-                'api/trains/' => 'api/train/index',
-                'coda/sync-status/<key:\w+>' => 'coda/sync-status',
-                '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
-                '<controller>/<action>' => '<controller>/<action>',
+                'product/<action>/<id:\d+>' => 'product/<action>',
+                'product/<action>' => 'product/<action>',
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/book', 'v1/author'],
+                    'pluralize' => false,
+                ],
+
             ],
         ],
 
